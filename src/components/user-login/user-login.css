@@ -1,0 +1,19 @@
+.container--input {
+        margin-bottom: 16px;
+}
+
+.container--input-field {
+    margin-bottom: 16px;
+}
+
+.container--input-field-text {
+    border: none;
+    outline: none;
+    border-radius: 16px;
+    padding: 12px 24px;
+    margin-bottom: 4px;
+}
+
+.container--input-field-text::placeholder {
+    font-size: 12px;
+}
