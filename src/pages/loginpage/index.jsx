@@ -3,37 +3,49 @@ import { UserLogin } from "../../components/user-login";
 import { NavLink } from "react-router-dom";
 
 import "./login.css";
+import { useAuth } from "../../contexts/authentication";
 
 export function LoginPage() {
-  const methods = useForm();
+    const methods = useForm();
+    const { login, logout } = useAuth();
 
-  const { handleSubmit } = methods;
+    const { handleSubmit } = methods;
 
-  function teste() {
-    alert("Usuário Logado!");
-  }
+    function onSubmit(data) {
+        // console.log(login());
+        // console.log(logout());
+        login(data);
+    }
 
-  return (
-    <div className="container--login">
-      <div className="container--image">
-        <h1>Bem-vindo de volta!</h1>
-        <img src="programming.png" alt="Pessoa programando" />
-      </div>
+    return (
+        <div className="container--login">
+            <div className="container--image">
+                <h1>Bem-vindo de volta!</h1>
+                <img src="programming.png" alt="Pessoa programando" />
+            </div>
 
-      <div className="container--form">
-        <h2> Login </h2>
-        <form onSubmit={handleSubmit(teste)}>
-          <FormProvider {...methods}>
-            <UserLogin />
-          </FormProvider>
-          <div className="form--buttons">
-            <NavLink to="/" end>
-              <button type="button"> Home </button>
-            </NavLink>
-            <button type="submit"> Login </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
+            <div className="container--form">
+                <h2> Login </h2>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <FormProvider {...methods}>
+                        <UserLogin />
+                    </FormProvider>
+                    <div className="form--buttons">
+                        {/* <NavLink to="/" end> */}
+                        <button
+                            type="button"
+                            onClick={() => {
+                                logout();
+                            }}
+                        >
+                            {" "}
+                            Home{" "}
+                        </button>
+                        {/* </NavLink> */}
+                        <button type="submit"> Login </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
 }
