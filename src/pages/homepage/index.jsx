@@ -1,21 +1,69 @@
+import { useForm, FormProvider } from "react-hook-form";
+import { useCycle } from "../../contexts/cycle";
+
+import { Button } from "../../components/button";
+import { NewCycle } from "../../components/new-cycle";
+import { Timer } from "../../components/timer";
+
 import "./home.css";
-import { NavLink } from "react-router-dom";
+import { OctagonX, Play } from "lucide-react";
+
 export function HomePage() {
-  return (
-    <div className="container--home container--background">
-      <div className="container--screen-card">
-        <h1>Seja bem-vindo(a)!</h1>
-        <h4>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel
-          repudiandae, cum quod eius repellendus laudantium earum voluptate
-          maxime molestias nihil totam esse, voluptatum non cupiditate ipsam?
-          Quae totam quas maxime.
-        </h4>
-        <span>Já é usuário? Faça seu Login</span>
-        <NavLink to="/login" end>
-          <button>Login</button>
-        </NavLink>
-      </div>
-    </div>
-  );
+    const methods = useForm({
+        defaultValues: {
+            task: "",
+            minutesAmount: 0,
+        },
+    });
+    const { createNewCycle, activeCycle, interruptedCurrentCycle } = useCycle();
+    const { handleSubmit, reset, watch } = methods;
+
+    // JSDOC => Utilizado para melhorar a documentação do código
+    /**
+     *
+     * @param {Object} data  Dados para criação de um novo ciclo
+     * @param {String} data.task
+     * @param {number} data.minutesAmount
+     *
+     * @example
+     * const task = 'Aprender JSDoc'
+     * const minutesAmount = 25
+     * createNewCycle({task, minutesAmount})
+     */
+
+    // Pode ser passado 'data' como parâmetro por ter a criação do JSDOC,
+    // Que identifica os itens dentro de 'data'
+
+    function onSubmit(data) {
+        createNewCycle(data);
+        reset();
+    }
+
+    const task = watch("task");
+    const isSubmitDisabled = !task;
+
+    return (
+        <form className="container--home" onSubmit={handleSubmit(onSubmit)}>
+            <FormProvider {...methods}>
+                <NewCycle />
+            </FormProvider>
+
+            <Timer />
+
+            {activeCycle ? (
+                <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={interruptedCurrentCycle}
+                >
+                    <OctagonX size={24} /> Interromper
+                </Button>
+            ) : (
+                <Button type="submit" disabled={isSubmitDisabled}>
+                    <Play size={24} />
+                    Começar
+                </Button>
+            )}
+        </form>
+    );
 }
