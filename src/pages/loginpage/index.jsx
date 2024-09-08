@@ -7,7 +7,7 @@ import { Link, Navigate } from "react-router-dom";
 
 export function LoginPage() {
     const methods = useForm();
-    const { login, auth } = useAuth();
+    const { login } = useAuth();
 
     const { handleSubmit } = methods;
 
