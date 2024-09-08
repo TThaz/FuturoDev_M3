@@ -26,34 +26,18 @@ const AuthContext = createContext({
 });
 
 export function AuthProvider({ children }) {
-    const [isLogged, setIsLogged] = useState(false);
-    const [auth, setAuth] = useState({
-        token: 0,
-        value: false,
-    });
-    const [userData, setUserData] = useState({
-        email: "",
-        password: "",
-    });
-    // const [login, setLogin] = useState();
+    const [auth, setAuth] = useState(null);
 
     function login(data) {
-        setUserData({
-            email: data.email,
-            password: data.password,
-        });
-
         const usuarioCadastrado = usuarios.find(
-            ({ email }) => email == userData.email
+            ({ email }) => email == data.email
         );
 
         if (usuarioCadastrado) {
-            if (usuarioCadastrado.senha === userData.password) {
-                setAuth({
-                    token: new Date().getTime(),
-                    value: true,
-                });
-                setIsLogged(true);
+            if (usuarioCadastrado.senha === data.password) {
+                setAuth("Logado");
+                localStorage.setItem("isLogged", JSON.stringify("Logado"));
+                window.location.href = "/home";
                 return;
             }
             return console.log("Informações de Login estão incorretas");
@@ -63,17 +47,14 @@ export function AuthProvider({ children }) {
     }
 
     const logout = () => {
-        setIsLogged(false);
-        setUserData({
-            email: "",
-            password: "",
-        });
+        localStorage.removeItem("isLogged");
+        setAuth(null);
     };
 
     return (
         <AuthContext.Provider
             value={{
-                isLogged,
+                auth,
                 login,
                 logout,
             }}

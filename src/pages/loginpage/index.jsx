@@ -1,19 +1,16 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { UserLogin } from "../../components/user-login";
-import { NavLink } from "react-router-dom";
 
 import "./login.css";
 import { useAuth } from "../../contexts/authentication";
 
 export function LoginPage() {
     const methods = useForm();
-    const { login, logout } = useAuth();
+    const { login } = useAuth();
 
     const { handleSubmit } = methods;
 
     function onSubmit(data) {
-        // console.log(login());
-        // console.log(logout());
         login(data);
     }
 
@@ -31,17 +28,6 @@ export function LoginPage() {
                         <UserLogin />
                     </FormProvider>
                     <div className="form--buttons">
-                        {/* <NavLink to="/" end> */}
-                        <button
-                            type="button"
-                            onClick={() => {
-                                logout();
-                            }}
-                        >
-                            {" "}
-                            Home{" "}
-                        </button>
-                        {/* </NavLink> */}
                         <button type="submit"> Login </button>
                     </div>
                 </form>
