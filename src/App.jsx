@@ -1,12 +1,15 @@
 import { RouterProvider } from "react-router-dom";
 import { routes } from "./routes";
 
+import { CycleProvider } from "./contexts/cycle";
 import { AuthProvider } from "./contexts/authentication";
 function App() {
     return (
         <>
             <AuthProvider>
-                <RouterProvider router={routes} />
+                <CycleProvider>
+                    <RouterProvider router={routes} />
+                </CycleProvider>
             </AuthProvider>
         </>
     );

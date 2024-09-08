@@ -3,6 +3,7 @@ import { UserLogin } from "../../components/user-login";
 
 import "./login.css";
 import { useAuth } from "../../contexts/authentication";
+import { Link, Navigate } from "react-router-dom";
 
 export function LoginPage() {
     const methods = useForm();
@@ -12,6 +13,10 @@ export function LoginPage() {
 
     function onSubmit(data) {
         login(data);
+
+        if (auth) {
+            <Navigate to="/home" replace></Navigate>;
+        }
     }
 
     return (

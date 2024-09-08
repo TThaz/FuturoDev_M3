@@ -43,7 +43,7 @@ export function AuthProvider({ children }) {
             return console.log("Informações de Login estão incorretas");
         }
 
-        console.log("Informações de login estão incorretas");
+        alert("Informações de login estão incorretas");
     }
 
     const logout = () => {

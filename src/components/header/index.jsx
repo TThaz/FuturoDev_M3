@@ -1,7 +1,9 @@
 import "./header.css";
+
 import { LogOut, User } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication";
+
 
 export function Header() {
     const isLogged = JSON.parse(localStorage.getItem("isLogged"));
