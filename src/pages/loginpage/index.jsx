@@ -22,7 +22,7 @@ export function LoginPage() {
     return (
         <div className="container--login">
             <div className="container--image">
-                <h1>Bem-vindo de volta!</h1>
+                <h1>Bem-vindo(a) de volta!</h1>
                 <img src="programming.png" alt="Pessoa programando" />
             </div>
 
