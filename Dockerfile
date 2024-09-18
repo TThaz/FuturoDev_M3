@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:alpine AS builder
 
 WORKDIR /app
 
@@ -6,6 +6,11 @@ COPY . .
 
 RUN npm install
 
-EXPOSE 3000
+RUN npm run build
 
-CMD ["npm", "run", "dev"]
+FROM nginx:alpine AS final
+
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+EXPOSE 443
